@@ -9,14 +9,15 @@ Page({
   data: {
     school:'',
     academy:'',
-    imgList:[],
+    imgList:[],   //图片的临时文件路径
     creditList:[1,2,3,4,5],
-    creditVal:1,
+    creditVal:1,   //悬赏的积分
     title:'',
     content:'',
-    imgurl:[],
+    imgurl:[],  //图片的储存路径
     openid:'',
-    type:''
+    type:'',
+    oldcredit:0   //旧的用户积分
   },
   
   /**
@@ -26,7 +27,6 @@ Page({
     this.setData({
       title:e.detail.value
     });
-    console.log(this.data.title)
   },
   /**
    * 同步内容信息
@@ -36,7 +36,6 @@ Page({
     this.setData({
       content:e.detail.value
     });
-    console.log(this.data.content);
   },
   /**
    * 选择图片
@@ -60,7 +59,6 @@ Page({
       current:e.currentTarget.dataset.src,
       urls: that.data.imgList,
     });
-    console.log(e);
   },
   /**
    * 设置积分
@@ -114,6 +112,21 @@ Page({
         wx.showToast({
           title: '上传成功'
         });
+        //修改用户积分
+        let userdb = db.collection('userInfo').doc(app.globalData.openid);
+        userdb.get({
+          success:res=>{
+            that.setData({
+              oldcredit:res.data.usercredit
+            });
+            userdb.update({
+              data: {
+                usercredit: that.data.oldcredit - that.data.creditVal
+              }
+            })
+          }
+        });
+        
         setTimeout(function () {
           wx.navigateBack()
         }, 1000)

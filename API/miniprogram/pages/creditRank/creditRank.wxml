@@ -1,0 +1,10 @@
+<!--pages/creditRank/creditRank.wxml-->
+<view id='container'>
+  <scroll-view scroll-y>
+    <view class='listItem' wx:for="{{userList}}">
+      <view class='ranking common'>{{item.ranking}}</view>
+      <view class='username common'>{{item.username}}</view>
+      <view class='credit common'>{{item.usercredit}}</view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,7 +1,6 @@
 // pages/completeInform/completeInform.js
 const app = getApp();
 const db = wx.cloud.database();
-
 Page({
   data: {
     user_name: '',
@@ -47,30 +46,21 @@ Page({
       content: '确认修改信息',
       success: function (res) {
         if (res.confirm) {//这里是点击了确定以后
-        //用户记录的id
-        let dbID;
-        //获取用户记录的id
-        db.collection('userInfo').where({
-          _openid: app.globalData.openid
-        }).get({
-          success:res=>{
-            dbID = res.data[0]._id;
-          },
-          fail:err=>{
-            dbID = 0;
-          }
-        })
         //更新数据到数据库
-          db.collection('userInfo').doc(dbID).update({
+          db.collection('userInfo').doc(app.globalData.openid).update({
           data:{
-            username:that.data.user_name
+            username:that.data.user_name,
+            usernum:that.data.user_num,
+            useracademy: that.data.academy[that.data.academyIndex],
+            userschool: that.data.school[that.data.schoolIndex]
           },
           success(res){
-            console.log('set success')
-          }
-        })
-          // 保存信息后返回上1页面
-          wx.navigateBack({
+            wx.showLoading({
+              title: '保存中',
+            })
+            // 保存信息后返回上1页面
+            wx.navigateBack();
+            }
           })
         } else {//这里是点击了取消以后
 
@@ -78,6 +68,7 @@ Page({
       }
     })
   },
+  //页面显示时同步信息
   onShow: function () {
     let that = this;
     db.collection('userInfo').where({
@@ -93,7 +84,6 @@ Page({
           schoolIndex: app.getIndex(that.data.school, resData.userschool),
           academyIndex: app.getIndex(that.data.academy, resData.useracademy)
         });
-        console.log('lubenwei');
       }
     })
   }

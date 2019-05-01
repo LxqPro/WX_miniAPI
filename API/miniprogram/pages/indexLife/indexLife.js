@@ -31,13 +31,13 @@ Page({
   onShow: function (options) {
     //-------------------------------------------拉取生活帖部分内容
     db.collection('Posts').where({
-      type: 'lifePosts'    //学术帖
+      type: 'lifePosts'    //生活帖
     }).get({
       success: res => {
+        console.log(res);
         this.setData({
           acaList: res.data  //将查询结果的所有信息都扔给academic_recList
         })
-        console.log('[学术帖] [查询记录] 成功: ', res)
       },
       fail: err => {
         wx.showToast({
@@ -55,7 +55,6 @@ Page({
     }).get({
       success: res => {
         let resData = res.data[0];
-        console.log(resData)
         this.setData({
           schoolName: resData.userschool,
           academyIndex: app.getIndex(this.data.academyList, resData.useracademy)

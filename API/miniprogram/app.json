@@ -7,7 +7,8 @@
     "pages/indexOthers/indexOthers",
     "pages/completeInform/completeInform",
     "pages/postDetail/postDetail",
-    "pages/postCreate/postCreate"
+    "pages/postCreate/postCreate",
+    "pages/creditRank/creditRank"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -16,23 +17,24 @@
     "navigationBarTitleText": "小扳手",
     "navigationBarTextStyle": "black"
   },
-  "tabBar":{
-    "color":"#9ea1a6",
-    "selectedColor":"#73b4ee",
-    "backgroundColor":"#ffffff",
-    "list":[
+  "tabBar": {
+    "color": "#9ea1a6",
+    "selectedColor": "#73b4ee",
+    "backgroundColor": "#ffffff",
+    "list": [
       {
-        "pagePath":"pages/index/index",
-        "text":"首页",
+        "pagePath": "pages/index/index",
+        "text": "首页",
         "iconPath": "/images/tabBar/首页.png",
         "selectedIconPath": "/images/tabBar/首页S.png"
       },
       {
-        "pagePath":"pages/userInfo/userInfo",
-        "text":"用户",
+        "pagePath": "pages/userInfo/userInfo",
+        "text": "用户",
         "iconPath": "/images/tabBar/个人中心.png",
         "selectedIconPath": "/images/tabBar/个人中心S.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

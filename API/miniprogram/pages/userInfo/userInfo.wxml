@@ -15,4 +15,5 @@
   <text id='academy'>学院：{{useracademy}}</text>
 </view>
 <button class='changeInfo' bindtap='changeInfo'>修改个人信息</button>
+<button class='changeInfo' bindtap='showRank'>查看积分排名</button>
 </view>

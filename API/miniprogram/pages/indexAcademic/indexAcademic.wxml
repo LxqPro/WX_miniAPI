@@ -19,7 +19,7 @@
         <text>{{item.poster.name}}</text>
         <icon type='{{item.status}}'></icon>
       </view>
-      <text id='postCredits' class='postHeader'>[{{item.credit}}积分]</text>
+      <text id='postCredits' class='postHeader'>[{{item.credits}}积分]</text>
       <text id='postContent'>{{item.title}}</text>
     </navigator>
   </scroll-view>
