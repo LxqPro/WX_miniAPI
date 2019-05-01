@@ -1,14 +1,19 @@
 // pages/indexLife/indexLife.js
+const app = getApp();
+const db = wx.cloud.database();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    resList:[],
-    schoolName: '重庆大学',
-    academyName: '大数据与软件学院',
-    academyList: ['大数据与软件学院', '计算机学院', '化工学院', '微电子与通信学院']
+    schoolName: '',
+    academyName: '',
+    academyIndex: 0,
+    academyList: ['大数据与软件学院', '法学院', '计算机学院', '生物工程学院', '冯焱华学院', '王天岗学院'],
+    acaList: [],
+    postList: [],
+    type:'lifePosts'
   },
 
   /**
@@ -16,52 +21,53 @@ Page({
    */
   ensureSelect: function (e) {
     this.setData({
-      academyName: this.data.academyList[e.detail.value]
+      academyIndex: e.detail.value
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    // wx.cloud.init({
-    //   env: 'cqu-se-06class-f9b488', //确认云环境ID
-    //   traceUser: true,
-    // })
-    // const db = wx.cloud.database()
 
-    // //-------------------------------------------拉取生活帖部分内容
-    // db.collection('Posts').where({
-    //   done: false,        //筛选条件为仍未结帖的帖子
-    //   type: 'lifePosts'    //并且是生活帖
-    // }).get({
-    //   success: res => {
-    //     this.setData({
-    //       //   num:0,
-    //       recList: res.data,  //将查询结果的所有信息都扔给academic_recList
-    //     })
-    //     console.log('[数据库] [查询记录] 成功: ', res)
-    //   },
-    //   fail: err => {
-    //     wx.showToast({
-    //       icon: 'none',
-    //       title: '查询记录失败'
-    //     })
-    //     console.error('[数据库] [查询记录] 失败：', err)
-    //   },
-    // });
+  /**
+   * 生命周期函数--监听页面出现
+   */
+  onShow: function (options) {
+    //-------------------------------------------拉取生活帖部分内容
+    db.collection('Posts').where({
+      type: 'lifePosts'    //学术帖
+    }).get({
+      success: res => {
+        this.setData({
+          acaList: res.data  //将查询结果的所有信息都扔给academic_recList
+        })
+        console.log('[学术帖] [查询记录] 成功: ', res)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    });
+    /**
+     * 初始化页面个人信息
+     */
+    db.collection('userInfo').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        let resData = res.data[0];
+        console.log(resData)
+        this.setData({
+          schoolName: resData.userschool,
+          academyIndex: app.getIndex(this.data.academyList, resData.useracademy)
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
   },
 

@@ -1,5 +1,6 @@
 // pages/postCreate/postCreate.js
 const app=getApp();
+const db = wx.cloud.database();  //获取数据库引用
 Page({
 
   /**
@@ -14,7 +15,8 @@ Page({
     title:'',
     content:'',
     imgurl:[],
-    openid:''
+    openid:'',
+    type:''
   },
   
   /**
@@ -94,13 +96,11 @@ Page({
     this.setData({
       imgurl:pathArr
     })
-
-    const db = wx.cloud.database()  //获取数据库引用
   
     // doc(that.data.openid);
     db.collection('Posts').add({
       data: {
-        type:'academicPosts',  //帖子类型
+        type:that.data.type,  //帖子类型
         done: false,  //是否已被解决
         school: that.data.school, //学校
         academy: that.data.academy, //学院
@@ -124,9 +124,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
     this.setData({
-      school:options.school,
-      academy:options.academy,
+      school: options.school,
+      academy: options.academy,
+      type: options.type
     });
   },
 
@@ -142,7 +144,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

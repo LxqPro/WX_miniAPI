@@ -1,5 +1,6 @@
 // pages/indexAcademic/indexAcademic.js
 const app = getApp();
+const db = wx.cloud.database();
 Page({
 
   /**
@@ -7,10 +8,12 @@ Page({
    */
   data: {
     schoolName: '',
-    academyName: '',
-    academyList: ['大数据与软件学院', '计算机学院', '自动化学院', '微电子与通信学院'],
+    academyName:'',
+    academyIndex: 0,
+    academyList: ['大数据与软件学院', '法学院', '计算机学院', '生物工程学院', '冯焱华学院', '王天岗学院'],
     acaList: [],
-    postList: []
+    postList: [],
+    type:'academicPosts'
   },
 
   /**
@@ -18,7 +21,7 @@ Page({
    */
   ensureSelect: function (e) {
     this.setData({
-      academyName: this.data.academyList[e.detail.value]
+      academyIndex: e.detail.value
     })
   },
 
@@ -26,7 +29,6 @@ Page({
    * 生命周期函数--监听页面出现
    */
   onShow: function (options) {
-    const db = wx.cloud.database()
     //-------------------------------------------拉取生活帖部分内容
     db.collection('Posts').where({
       type: 'academicPosts'    //学术帖
@@ -43,7 +45,7 @@ Page({
           title: '查询记录失败'
         })
         console.error('[数据库] [查询记录] 失败：', err)
-      },
+      }
     });
     /**
      * 初始化页面个人信息
@@ -51,7 +53,14 @@ Page({
     db.collection('userInfo').where({
        _openid:app.globalData.openid
     }).get({
-      
+      success:res=>{
+        let resData = res.data[0];
+        console.log(resData)
+        this.setData({
+          schoolName:resData.userschool,
+          academyIndex:app.getIndex(this.data.academyList, resData.useracademy)
+        })
+      }
     })
   },
 

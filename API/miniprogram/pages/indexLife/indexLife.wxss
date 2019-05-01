@@ -1,6 +1,28 @@
 /* pages/indexLife/indexLife.wxss */
 .container{
   box-sizing: border-box;
+  background-color: #ddd;
+}
+/* 发帖按钮样式 */
+#postCreater{
+  width: 100rpx;
+  height: 100rpx;
+
+  position: fixed;
+  bottom: 50rpx;
+  right: 50rpx;
+  z-index: 1;
+}
+/*发帖图片大小*/
+#postCreater image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 70%;
+}
+/*文字公共样式*/
+text{
+  display: block;
+  text-align: center;
 }
 #head{
   display: flex;
@@ -14,5 +36,71 @@
   text-align: center;
   line-height: 80rpx;
   display: block;
+}
+
+/*滚动区域*/
+scroll-view{
+  /* height: 80vh; */
+  width:100%;
+}
+/* 帖子样式 */
+#posts{
+  margin-bottom: 2px;
+  background-color: #fff;
+}
+
+/*积分文字*/
+#postCredits{
+  color: skyblue;
+}
+/*现金文字*/
+/* #postCash{
+  color:red;
+  text-align: center;
+} */
+/*内容文字*/
+#postContent{
+  font-size: 3vh;
+  word-break: break-word;
+  overflow: hidden;
+  white-space: normal;
+  text-align: left;
+  width: 700rpx;
+  max-width: 700rpx;
+  margin: 2vh 25rpx ;
+  margin-bottom: 0;
+  font-family: '宋体';
+  color: #555;
+}
+/*现金积分公共样式*/
+.postHeader{
+  display: inline-block;
+  text-align: left;
+  width: 50%;
+  font-size: 2.5vh;
+}
+
+/*用户信息*/
+#userInfo{
+  height: 60rpx;
+}
+/*头像*/
+#userInfo image{
+  float: left;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+/*姓名*/
+#userInfo text{
+  float: left;
+  font-size: 2.5vh;
+  padding-left: 20rpx;
+  font-weight: 550;
+}
+/* 状态 */
+#userInfo icon{
+  float: right;
+  margin-right: 30rpx;
 }
 

@@ -1,13 +1,13 @@
 <!--pages/indexAcademic/indexAcademic.wxml-->
 <view class = 'container'>
   <!-- 发帖 -->
-  <navigator id='postCreater' url='../postCreate/postCreate?school={{schoolName}}&academy={{academyName}}'>
+  <navigator id='postCreater' url='../postCreate/postCreate?school={{schoolName}}&academy={{academyList[academyIndex]}}&type={{type}}'>
     <image src='/images/postCreate.png'></image>
   </navigator>
   <view id = 'head'>
     <text class = 'head'>{{schoolName}}</text>
-    <picker mode='selector' range="{{academyList}}" bindchange='ensureSelect'>
-      <text class = 'head'>{{academyName}}</text>
+    <picker mode='selector' range="{{academyList}}" bindchange='ensureSelect' value="{{academyIndex}}">
+      <text class = 'head'>{{academyList[academyIndex]}}</text>
     </picker>
   </view>
   <!-- /*帖子信息列表*/ -->

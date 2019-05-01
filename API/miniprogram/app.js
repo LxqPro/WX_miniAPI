@@ -17,8 +17,18 @@ App({
       complete: res => {
         this.globalData=({
           openid: res.result.openid
-        })
+        });
+        console.log(res.result);
+      }
+    });
+  },
+  getIndex: function (arr, content) {
+    var Index = 0;
+    arr.forEach(function (value, index) {
+      if (value == content) {
+        Index = index;
       }
     })
+    return Index;
   }
 })

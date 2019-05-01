@@ -7,20 +7,20 @@
   </view>
   
   <view class='com-info-schoolid'>学号：
-    <input bindblur='bindInputSchoolid' placeholder='{{user_schoolid}}' class='com-info-schoolid-input'></input>
+    <input bindblur='bindInputSchoolid' placeholder='{{user_num}}' class='com-info-schoolid-input'></input>
   </view>
   
-  <picker bindchange="bindPickerSchool" value="{{schoolindex}}" range="{{school}}" class='com-info-school' >
+  <picker bindchange="bindPickerSchool" value="{{schoolIndex}}" range="{{school}}" class='com-info-school' >
     <view>
       <!-- 学校：{{user_school}} -->
-      学校：{{school[schoolindex]}}
+      学校：{{school[schoolIndex]}}
     </view>
   </picker>
  
-  <picker bindchange="bindPickerAcademy" value="{{academyindex}}" range="{{academy}}" class='com-info-academy'>
+  <picker bindchange="bindPickerAcademy" value="{{academyIndex}}" range="{{academy}}" class='com-info-academy'>
     <view>
       <!-- 学院：{{user_academy}} -->
-      学院：{{academy[academyindex]}}
+      学院：{{academy[academyIndex]}}
     </view>
   </picker>
   
