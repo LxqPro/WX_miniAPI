@@ -1,0 +1,60 @@
+/* pages/completeInform/completeInform.wxss */
+/* 整体背景布局 */
+.com-info-bg{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 800rpx;
+  width: 100%;
+  font-size: 35rpx;
+}
+/* 信息完善 */
+.com-info-title{
+  font-size: 30rpx;
+  color:rgb(209, 209, 209);
+  text-align:center;
+  margin: 10rpx auto;
+}
+/* 姓名样式 */
+.com-info-name{
+  position:relative;
+  border-top:1rpx solid black;
+  padding: 20rpx 0;
+}
+/* 姓名输入框样式 */
+.com-info-name-input{
+  position:absolute;
+  top:20rpx;
+  left:100rpx;
+}
+/* 学号样式 */
+.com-info-schoolid{
+  position:relative;
+  border-top:1rpx solid black;
+  padding: 20rpx 0;
+}
+/* 学号输入框样式 */
+.com-info-schoolid-input{
+  position:absolute;
+  top:20rpx;
+  left:100rpx;
+}
+/* 学校样式 */
+.com-info-school{
+  border-top:1rpx solid black;
+  padding: 20rpx 0;
+}
+
+/* 学院样式 */
+.com-info-academy{
+  border-top:1rpx solid black;
+  border-bottom:1rpx solid black;
+  padding: 20rpx 0;
+}
+/* 保存样式 */
+.com-info-save{
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+}

@@ -1,0 +1,92 @@
+/* 主容器样式 */
+#container{
+  display: flex;
+  flex-direction: column;
+  background-color: #ccc;
+  box-sizing: content-box;
+}
+
+/* 顶部导航栏样式 */
+.topBar{
+  height: 200rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/* 推荐区样式 */
+.recommend{
+  height: 80vh;
+}
+
+.topBar, .recommend{
+  width: 100%;
+  background-color: #fff;
+}
+/* 导航项被点击后改变的样式 */
+.cur text{
+  color:#ccc!important;
+}
+/* 导航栏 */
+.nav{
+  height: 200rpx;
+  width: 250rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top:25rpx;
+}
+/* 导航栏图片 */
+.nav image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  flex:1;
+}
+/* 所有文字样式 */
+text{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 50rpx;
+}
+/* 导航栏文字 */
+.nav text{
+  font-size: 25rpx;
+  line-height: 100rpx;
+  flex:1;
+}
+/*滚动区域*/
+scroll-view{
+  height: 80vh;
+}
+/* 推荐栏文字导航部分 */
+#recContent{
+  font-size: 3vh;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  text-align: left;
+  width: 700rpx;
+  max-width: 700rpx;
+  margin: 2vh 25rpx ;
+  font-family: '宋体';
+  color: #555;
+}
+/* 推荐栏头部信息 */
+.recHeader{
+  display: inline-block;
+  text-align: left;
+  width: 50%;
+  font-size: 2.5vh;
+}
+/* 积分 */
+#recCredits{
+  color: skyblue;
+}
+/* 现金 */
+/* #recCash{
+  color:red;
+  text-align: center;
+} */

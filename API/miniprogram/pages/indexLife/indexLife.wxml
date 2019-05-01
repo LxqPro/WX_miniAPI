@@ -1,0 +1,22 @@
+<!--pages/indexLife/indexLife.wxml-->
+<view class = 'container'>
+  <view id = 'head'>
+    <text class = 'head'>{{schoolName}}</text>
+    <picker mode='selector' range="{{academyList}}" bindchange='ensureSelect'>
+      <text class = 'head'>{{academyName}}</text>
+    </picker>
+<!-- 显示帖子简略 -->
+<!-- <scroll-view scroll-y bindscrolltolower='recUpdate'>
+  <navigator wx:for="{{recList}}"wx:key="key" url='../../pages/tip/tip?title={{item._id}}' >
+    <view class='tip'>
+      <text class='school'>学校：{{item.school}}</text>
+      <text class='done'>状态：{{item.done}}</text>
+      <text class='content'>{{item.content}}</text>
+      <text class='credits'>积分：{{item.credits}}</text>
+      <text class='reward'> ${{item.reward}}</text>
+    </view>
+   </navigator>
+</scroll-view> -->
+  </view>
+</view>
+

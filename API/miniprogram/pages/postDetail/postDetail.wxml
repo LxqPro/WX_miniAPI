@@ -1,0 +1,24 @@
+<!-- 帖子内容 -->
+<view wx:for="{{recList}}"wx:key="key"  >
+    <view class='tip'>
+      <text class='school'>学校：{{item.school}}</text>
+      <text class='done'>状态：{{item.done}}</text>
+      <text class='credits'>积分：{{item.credits}}</text>
+      <text class='reward'> ${{item.reward}}</text>
+      <text class='content' decode="{{true}}">&nbsp;{{item.content}}</text>
+      <text class='replybutton' bindtap='replybutton'>回复</text>
+    </view>
+</view>
+
+
+<!-- 回复框 -->
+<form bindsubmit="formSubmit" bindreset="formReset" wx:if="{{isReply==true}}">
+<view class='reply'>
+<view class='repcontent'>
+<textarea name='input' auto-focus='true' auto-height='true'></textarea>
+</view>
+<view class='repsend'>
+<button form-type='submit'>发送</button>
+</view>
+</view>
+</form>

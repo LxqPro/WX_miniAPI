@@ -1,0 +1,12 @@
+<!--pages/indexOthers/indexOthers.wxml-->
+<scroll-view scroll-y bindscrolltolower='recUpdate'>
+  <navigator wx:for="{{recList}}"wx:key="key" url='../../pages/postDetail/postDetail?title={{item._id}}' >
+    <view class='tip'>
+      <text class='school'>学校：{{item.school}}</text>
+      <text class='done'>状态：{{item.done}}</text>
+      <text class='content'>{{item.content}}</text>
+      <text class='credits'>积分：{{item.credits}}</text>
+      <text class='reward'> ${{item.reward}}</text>
+    </view>
+   </navigator>
+</scroll-view>

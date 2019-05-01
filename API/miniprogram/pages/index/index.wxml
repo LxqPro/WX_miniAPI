@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view id = "container">
+<!-- 顶部导航按钮 -->
+  <view class = "topBar">
+    <!-- 分别为学术贴，生活贴和校外贴 -->
+    <view id = 'acadamy'>
+      <navigator url='../indexAcademic/indexAcademic' class = "{{num == 1?'cur':''}} nav" bindtap='navigateTo' data-num='1'>
+        <image mode = 'aspectFit' src = '/images/MY1.png'></image>
+        <text class="nav-text">学术贴</text>
+      </navigator>
+    </view>
+    <view id = 'life'>
+      <navigator url='../indexLife/indexLife' class = "{{num == 2?'cur':''}} nav" bindtap='navigateTo' data-num='2'>
+        <image mode = 'aspectFit' src = '/images/MY2.png'></image>
+        <text class="nav-text">生活贴</text>
+      </navigator>
+    </view>
+    <view id = 'outer-school'>
+      <navigator url='../indexOthers/indexOthers' class = "{{num == 3?'cur':''}} nav" bindtap='navigateTo' data-num='3'>
+        <image mode = 'aspectFit' src = '/images/MY3.png'></image>
+        <text class="nav-text">校外圈</text>
+      </navigator>
+    </view>
+  </view>
+<!-- 推荐帖 -->
+  <view class = "recommend">
+    <text>推荐贴区域</text>
+    <scroll-view scroll-y bindscrolltolower='recUpdate'>
+      <!-- 精品贴列表 -->
+      <navigator wx:for="{{recList}}"wx:key="key" wx:if="{{index<number}}" url='../../pages/postDetail/postDetail?title={{item._id}}'>
+        <text id='recCredits' class='recHeader'>[{{item.credits}}积分]</text>
+        <!-- <text id='recCash'  class='recHeader'>(￥{{item.reward}})</text> -->
+        <text id='recContent'>{{item.content}}</text>
+      </navigator>
+    </scroll-view>
+  </view>
+</view>

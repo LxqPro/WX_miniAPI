@@ -1,0 +1,26 @@
+<!-- 主容器组件 -->
+<view id='container'>
+  <text id='header'>发布到{{school}}{{academy}}</text>
+  <!-- 编辑标题和正文 -->
+  <input id='postTitle' value='{{}}' placeholder='请输入标题' bindblur='titleSet'></input>
+  <textarea id='postContent' placeholder='在此处输入内容' maxlength='500' bindblur='contentSet'></textarea>
+  <!-- 选择图片 -->
+  <view id='postImg'>
+    <button bindtap='chooseImg'>点击选择图片</button>
+    <scroll-view class='imgContainer' scroll-y>
+      <image  bindtap='previewImg' src='{{item}}' wx:for="{{imgList}}" mode='aspectFill' data-src="{{item}}">
+      </image>
+    </scroll-view>
+  </view>
+  <!-- 设置积分数量 -->
+  <view class='creditSet'>
+    <text>积分</text>
+    <picker-view indicator-class='creditVal'  bindchange='creditChange'>
+      <picker-view-column>
+        <view class='creditVal' id='creditVal' wx:for="{{creditList}}">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <!-- 发布 -->
+  <button id='publish' bindtap='postPublish'>确认发布</button>
+</view>

@@ -1,0 +1,67 @@
+/* 全局样式 */
+#container{
+  box-sizing: border-box;
+}
+/*所有文本样式*/
+text{
+  display: block;
+}
+/*header*/
+#header{
+  width: 100%;
+  text-align: center;
+  font-size: 30rpx;
+}
+/*标题输入*/
+#postTitle{
+  box-sizing: border-box;
+  width: 100%;
+  margin: 30rpx 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 40rpx;
+}
+/*正文输入*/
+#postContent{
+  border-top: 1rpx solid #888;
+  border-bottom: 1rpx solid #888;
+  width: 700rpx;
+  padding:0 25rpx;
+}
+/*选择的图片预览*/
+#postImg image{
+  width:240rpx;
+  height: 240rpx;
+}
+/*图片容器*/
+.imgContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 15rpx;
+  height: 480rpx;
+  border-top: 1rpx solid blue;
+  border-bottom: 1rpx solid blue;
+}
+/*积分设置*/
+.creditSet{
+  height: 8vh;
+}
+.creditSet picker-view{
+  height: 8vh;
+  width: 250rpx;
+  float: right;
+}
+.creditSet text{
+  display: block;
+  float:left;
+  line-height: 8vh;
+  margin-left:25rpx;
+}
+.creditVal{
+  text-align: center;
+  height: 8vh;
+  line-height: 8vh;
+}
+#creditVal{
+  background-color: aqua;
+}

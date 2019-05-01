@@ -1,0 +1,18 @@
+<view class='container'>
+<!-- 头像 -->
+  <view id='headImg'>
+    <open-data type='userAvatarUrl' ></open-data>
+  </view>
+<!-- 姓名积分 -->
+  <view class='name-num'>
+    <text id='username'>{{username}}</text>
+    <text id='usernum'>{{usercredit}}</text>
+  </view>
+<!-- 学号学校学院 -->
+<view class='secondcontainer'>
+  <text id='credit'>学号：{{usernum}}</text>
+  <text id='school'>学校：{{userschool}}</text>
+  <text id='academy'>学院：{{useracademy}}</text>
+</view>
+<button class='changeInfo' bindtap='changeInfo'>修改个人信息</button>
+</view>

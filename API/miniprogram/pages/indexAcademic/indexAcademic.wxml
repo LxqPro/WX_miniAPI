@@ -1,0 +1,27 @@
+<!--pages/indexAcademic/indexAcademic.wxml-->
+<view class = 'container'>
+  <!-- 发帖 -->
+  <navigator id='postCreater' url='../postCreate/postCreate?school={{schoolName}}&academy={{academyName}}'>
+    <image src='/images/postCreate.png'></image>
+  </navigator>
+  <view id = 'head'>
+    <text class = 'head'>{{schoolName}}</text>
+    <picker mode='selector' range="{{academyList}}" bindchange='ensureSelect'>
+      <text class = 'head'>{{academyName}}</text>
+    </picker>
+  </view>
+  <!-- /*帖子信息列表*/ -->
+  <scroll-view scroll-y bindscrolltolower="postUpdate">
+    <navigator id='posts' url = '/pages/postDetail/postDetail?title={{item._id}}' wx:for="{{acaList}}">
+    <!-- /*头部信息*/ -->
+      <view id='userInfo'>
+        <image src="{{item.poster.imgurl}}"></image>
+        <text>{{item.poster.name}}</text>
+        <icon type='{{item.status}}'></icon>
+      </view>
+      <text id='postCredits' class='postHeader'>[{{item.credit}}积分]</text>
+      <text id='postContent'>{{item.title}}</text>
+    </navigator>
+  </scroll-view>
+ 
+</view>

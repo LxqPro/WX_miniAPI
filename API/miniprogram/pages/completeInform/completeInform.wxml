@@ -1,0 +1,28 @@
+<!--pages/completeInform/completeInform.wxml-->
+<view class='com-info-bg'>
+  <view class='com-info-title'>信息完善</view>
+ 
+  <view class='com-info-name'>姓名：
+    <input bindblur='bindInputName' placeholder='{{user_name}}' class='com-info-name-input'></input>
+  </view>
+  
+  <view class='com-info-schoolid'>学号：
+    <input bindblur='bindInputSchoolid' placeholder='{{user_schoolid}}' class='com-info-schoolid-input'></input>
+  </view>
+  
+  <picker bindchange="bindPickerSchool" value="{{schoolindex}}" range="{{school}}" class='com-info-school' >
+    <view>
+      <!-- 学校：{{user_school}} -->
+      学校：{{school[schoolindex]}}
+    </view>
+  </picker>
+ 
+  <picker bindchange="bindPickerAcademy" value="{{academyindex}}" range="{{academy}}" class='com-info-academy'>
+    <view>
+      <!-- 学院：{{user_academy}} -->
+      学院：{{academy[academyindex]}}
+    </view>
+  </picker>
+  
+  <button bindtap='SaveInfo' class='com-info-save'>保存</button>
+</view>

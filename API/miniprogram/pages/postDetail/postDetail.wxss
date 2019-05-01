@@ -1,0 +1,61 @@
+text{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 35rpx;
+  font-family: '宋体';
+}
+/* 一个帖子的容器 */
+.tip{
+  height: auto;
+  margin-top: 10rpx;
+  border: 1rpx solid rebeccapurple;
+  padding-top: 10rpx;
+  background-color: rgba(70, 63, 63, 0.11);
+}
+
+.school, .credits{
+  text-align: left;
+  width: 50%;
+  float: left;
+}
+.content{
+  text-align: left;
+}
+.done, .reward{
+  text-align: right;
+  width: 50%;
+  float: right;
+}
+
+/* 回复按钮 */
+.replybutton{
+  height: 50rpx;
+  width: 50rpx;
+  float: right;
+  font-size: 25rpx;
+  text-align: center;
+}
+/* 回复框 */
+.reply{
+  display: flex;
+  height: 200rpx;
+  width: 100%;
+
+}
+.repcontent{
+  flex: 7;
+ 
+}
+.repsend{
+  flex: 1;
+}
+/* 发送按钮 */
+.repsend button{
+  width: 93rpx;
+  height: 50rpx;
+  display: inline-block;
+  font-size: 23rpx;
+  line-height: 50rpx;
+  padding: 0;
+}
