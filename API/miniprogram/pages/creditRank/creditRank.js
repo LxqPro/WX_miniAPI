@@ -29,17 +29,29 @@ Page({
    */
   onShow: function () {
     let that = this;
-    const cmd = db.command;
-    db.collection('userInfo').where({
-      // usercredit: cmd.gte(100)
-    }).get({
-      success:res=>{
-        console.log(res);
+    wx.cloud.callFunction({
+      name: 'pullDB',
+      data: {},
+      success: function (res) {
+        console.log(res.result);
         that.setData({
-          userList:res.data
+          userList:res.result.data
         })
+      }, fail: function (res) {
+        console.log(res)
       }
     })
+    // const cmd = db.command;
+    // db.collection('userInfo').where({
+    //   // usercredit: cmd.gte(100)
+    // }).get({
+    //   success:res=>{
+    //     console.log(res);
+    //     that.setData({
+    //       userList:res.data
+    //     })
+    //   }
+    // })
   },
 
   /**

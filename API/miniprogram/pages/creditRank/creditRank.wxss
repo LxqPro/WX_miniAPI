@@ -1,10 +1,37 @@
 /* pages/creditRank/creditRank.wxss */
+view{
+  box-sizing: border-box;
+}
+
 #container{
   width: 100%;
   height: 100%;
 }
 
-.common{
+.header{
+  display: flex;
+  width: 100%;
+}
+.header view{
+  height: 30rpx;
   width: 250rpx;
-  height: 50rpx;
+  margin: 10rpx 0 50rpx 0;
+  text-align: center;
+  font-size: 30rpx;
+  color: #ccc;
+}
+.listItem{
+  display: flex;
+}
+
+.common{
+  height: 80rpx;
+  width: 250rpx;
+  padding: 15rpx 0;
+  text-align: center;
+  border-bottom: 1rpx dashed #ccc;
+}
+
+.ranking{
+  color: red;
 }

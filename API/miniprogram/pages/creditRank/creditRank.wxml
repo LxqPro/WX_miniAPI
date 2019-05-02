@@ -1,8 +1,13 @@
 <!--pages/creditRank/creditRank.wxml-->
 <view id='container'>
   <scroll-view scroll-y>
+    <view class = 'header'>
+      <view>名次</view>
+      <view>昵称</view>
+      <view>积分</view>
+    </view>
     <view class='listItem' wx:for="{{userList}}">
-      <view class='ranking common'>{{item.ranking}}</view>
+      <view class='ranking common'>{{index+1}}</view>
       <view class='username common'>{{item.username}}</view>
       <view class='credit common'>{{item.usercredit}}</view>
     </view>
