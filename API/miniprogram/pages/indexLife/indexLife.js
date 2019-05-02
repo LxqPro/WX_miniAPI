@@ -88,7 +88,30 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    var that = this;
+    db.collection('Posts').where({
+      type: 'lifePosts'    //学术帖
+    }).get({
+      success: res => {
+        this.setData({
+          acaList: res.data  //将查询结果的所有信息都扔给acaList
+        })
+        console.log('刷新成功，nb!')
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+      }
+    });
 
+    // 隐藏导航栏加载框
+    wx.hideNavigationBarLoading();
+    // 停止下拉动作
+    wx.stopPullDownRefresh();
   },
 
   /**
