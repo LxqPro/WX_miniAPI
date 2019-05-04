@@ -24,18 +24,50 @@ Page({
       academyIndex: e.detail.value
     })
   },
+  /**
+   * 跳转页面并缓存数据
+   */
+  navTo:function(e){
+    var that = this;
+    var userobj = {
+      name: that.data.acaList[e.currentTarget.dataset.index].postername,
+      head: that.data.acaList[e.currentTarget.dataset.index].posterhead
+    }
+    wx.setStorage({
+      key: 'postdata',
+      data: that.data.acaList[e.currentTarget.dataset.index],
+      success:function(){
+        wx.setStorage({
+          key: 'userInfo',
+          data: userobj
+        })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面出现
    */
   onShow: function (options) {
-    //-------------------------------------------拉取生活帖部分内容
+    //拉取学术帖部分内容
+    var tempRes = [];
+    var that = this;
     db.collection('Posts').where({
       type: 'academicPosts'    //学术帖
     }).get({
       success: res => {
-        this.setData({
-          acaList: res.data  //将查询结果的所有信息都扔给academic_recList
+        console.log(res.data)
+        tempRes = res.data;
+        tempRes.forEach(function(value,index,self){
+          db.collection('userInfo').doc(value._openid).get({
+            success:res=>{
+              self[index].postername = res.data.username;
+              self[index].posterhead = res.data.userhead;
+              that.setData({
+                acaList: tempRes  //将查询结果的所有信息都扔给academic_recList
+              })
+            }
+          })
         })
         console.log('[学术帖] [查询记录] 成功: ', res)
       },
@@ -58,7 +90,7 @@ Page({
         console.log(resData)
         this.setData({
           schoolName:resData.userschool,
-          academyIndex:app.getIndex(this.data.academyList, resData.useracademy)
+          academyIndex:app.getIndex(this.data.academyList, resData.useracademy),
         })
       }
     })

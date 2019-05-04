@@ -4,6 +4,7 @@ const db = wx.cloud.database();
 Page({
   data: {
     username:'',
+    userhead:'',
     userschool:'',
     usernum:'',
     useracademy:'',
@@ -13,16 +14,18 @@ Page({
    * 跳转到修改个人信息页面
    */
   changeInfo:function(){
+    var that = this
     wx.navigateTo({
-      url: '../completeInform/completeInform?username={{username}}&usernum={{usernum}}',
+      url: '../completeInform/completeInform?username="that.data.username"&usernum={{usernum}}',
     })
   },
   /**
    * 跳转到积分排名页面
    */
   showRank:function(){
+    var that = this
     wx.navigateTo({
-      url: '../creditRank/creditRank'
+      url: '../creditRank/creditRank?username='+that.data.username+'&usercredit='+that.data.usercredit
     })
   },
   onShow: function () {
@@ -39,13 +42,15 @@ Page({
             success: res => {
               that.setData({
                 username: res.userInfo.nickName,
-                usercredit:500
+                usercredit:500,
+                userhead: res.userInfo.avatarUrl
               });
               //写入数据库
               db.collection('userInfo').add({
                 data: {
                   _id: app.globalData.openid,
                   username: res.userInfo.nickName,
+                  userhead: res.userInfo.avatarUrl,
                   usernum: '',
                   usercredit: 500,
                   useracademy: '',

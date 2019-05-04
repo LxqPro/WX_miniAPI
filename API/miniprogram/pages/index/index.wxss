@@ -47,7 +47,7 @@
 /* 所有文字样式 */
 text{
   display: block;
-  width: 100%;
+
   text-align: center;
   font-size: 50rpx;
 }
@@ -60,9 +60,28 @@ text{
 /*滚动区域*/
 scroll-view{
   height: 80vh;
+  width: 700rpx;
+  margin: 0 auto;
 }
-/* 推荐栏文字导航部分 */
-#recContent{
+/* 单独帖子*/
+scroll-view navigator{
+    position: relative;
+}
+/* 头像 */
+scroll-view image{
+  height: 60rpx;
+  width: 60rpx;
+  border-radius: 50%;
+}
+/* 学校 */
+.recSchool{
+  position: absolute;
+  right: 30rpx;
+  top: 0rpx;
+  font-size: 25rpx;
+}
+/* 推荐栏文字部分 */
+.recContent{
   font-size: 3vh;
   overflow: hidden;
   white-space: nowrap;
@@ -85,8 +104,3 @@ scroll-view{
 #recCredits{
   color: skyblue;
 }
-/* 现金 */
-/* #recCash{
-  color:red;
-  text-align: center;
-} */

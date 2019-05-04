@@ -6,7 +6,14 @@
       <view>昵称</view>
       <view>积分</view>
     </view>
-    <view class='listItem' wx:for="{{userList}}">
+    <!-- 你的排名 -->
+    <view class='listItem myself'>
+      <view>{{userindex}}/50</view>
+      <view>{{username}}</view>
+      <view>{{usercredit}}</view>
+    </view>
+    <!-- 前n名 -->
+    <view class='listItem' wx:for="{{userList}}" wx:if="{{index<100}}">
       <view class='ranking common'>{{index+1}}</view>
       <view class='username common'>{{item.username}}</view>
       <view class='credit common'>{{item.usercredit}}</view>

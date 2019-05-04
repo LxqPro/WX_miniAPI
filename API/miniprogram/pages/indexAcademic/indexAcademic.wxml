@@ -12,16 +12,15 @@
   </view>
   <!-- /*帖子信息列表*/ -->
   <scroll-view scroll-y bindscrolltolower="postUpdate">
-    <navigator id='posts' url = '/pages/postDetail/postDetail?title={{item._id}}' wx:for="{{acaList}}">
+    <navigator id='posts' bindtap='navTo' url = '/pages/postDetail/postDetail' data-index='{{index}}' wx:for="{{acaList}}">
     <!-- /*头部信息*/ -->
       <view id='userInfo'>
-        <image src="{{item.poster.imgurl}}"></image>
-        <text>{{item.poster.name}}</text>
+        <image src="{{item.posterhead}}"></image>
+        <text>{{item.postername}}</text>
         <icon type='{{item.status}}'></icon>
       </view>
       <text id='postCredits' class='postHeader'>[{{item.credits}}积分]</text>
       <text id='postContent'>{{item.title}}</text>
     </navigator>
   </scroll-view>
- 
 </view>

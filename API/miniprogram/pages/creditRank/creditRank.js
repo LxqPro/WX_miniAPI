@@ -7,14 +7,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userList:[]
+    userList:[],
+    username:'',
+    usercredit:'',
+    userindex:'--'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      username:options.username,
+      usercredit:options.usercredit
+    })
   },
 
   /**
@@ -33,7 +39,13 @@ Page({
       name: 'pullDB',
       data: {},
       success: function (res) {
-        console.log(res.result);
+        res.result.data.forEach(function(value,index){
+          if(value._openid===app.globalData.openid){
+            that.setData({
+              userindex:index+1
+            })
+          }
+        })
         that.setData({
           userList:res.result.data
         })
@@ -41,17 +53,6 @@ Page({
         console.log(res)
       }
     })
-    // const cmd = db.command;
-    // db.collection('userInfo').where({
-    //   // usercredit: cmd.gte(100)
-    // }).get({
-    //   success:res=>{
-    //     console.log(res);
-    //     that.setData({
-    //       userList:res.data
-    //     })
-    //   }
-    // })
   },
 
   /**

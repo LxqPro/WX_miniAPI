@@ -32,7 +32,6 @@ Page({
    * 同步内容信息
    */
   contentSet: function (e) {
-    console.log(e);
     this.setData({
       content:e.detail.value
     });
@@ -99,7 +98,7 @@ Page({
     db.collection('Posts').add({
       data: {
         type:that.data.type,  //帖子类型
-        done: false,  //是否已被解决
+        status: 'waiting',  //是否已被解决
         school: that.data.school, //学校
         academy: that.data.academy, //学院
         credits: that.data.creditVal,  //悬赏分

@@ -27,10 +27,10 @@
     <text>推荐贴区域</text>
     <scroll-view scroll-y bindscrolltolower='recUpdate'>
       <!-- 精品贴列表 -->
-      <navigator wx:for="{{recList}}"wx:key="key" wx:if="{{index<number}}" url='../../pages/postDetail/postDetail?title={{item._id}}'>
-        <text id='recCredits' class='recHeader'>[{{item.credits}}积分]</text>
-        <!-- <text id='recCash'  class='recHeader'>(￥{{item.reward}})</text> -->
-        <text id='recContent'>{{item.content}}</text>
+      <navigator wx:for="{{recList}}" url='../../pages/postDetail/postDetail' data-index = '{{index}}' bindtap='toDetail'>
+        <image src = '{{item.posterhead}}'></image>
+        <text class='recSchool'>{{item.school}}</text>
+        <text class='recContent'>{{item.content}}</text>
       </navigator>
     </scroll-view>
   </view>

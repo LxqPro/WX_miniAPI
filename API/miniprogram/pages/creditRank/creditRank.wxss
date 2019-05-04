@@ -33,5 +33,16 @@ view{
 }
 
 .ranking{
+  color: blue;
+}
+.myself{
+  margin-bottom: 20rpx;
+  font-family: '宋体';
+  font-size: 50rpx;
   color: red;
+}
+.myself view{
+  width: 250rpx;
+  height: 100rpx;
+  text-align: center;
 }

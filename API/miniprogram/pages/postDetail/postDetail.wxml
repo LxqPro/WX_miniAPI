@@ -1,24 +1,67 @@
-<!-- 帖子内容 -->
-<view wx:for="{{recList}}"wx:key="key"  >
-    <view class='tip'>
-      <text class='school'>学校：{{item.school}}</text>
-      <text class='done'>状态：{{item.done}}</text>
-      <text class='credits'>积分：{{item.credits}}</text>
-      <text class='reward'> ${{item.reward}}</text>
-      <text class='content' decode="{{true}}">&nbsp;{{item.content}}</text>
-      <text class='replybutton' bindtap='replybutton'>回复</text>
+<view id = 'container' wx:if='{{isTapReply==false}}'>
+  <!-- 头部信息，包括学校和学院 -->
+  <view id = 'header'>
+    <text>{{postSchool}}</text>
+    <text>{{postAcademy}}</text>
+  </view>
+  <!-- 主体信息 -->
+  <view id='body'>
+    <!-- 包括头像、昵称、发布时间、状态 -->
+    <view id='bodyheader'>
+      <image src='{{userHead}}'></image>
+      <view>
+        <text>{{username}}</text>
+        <text class='date'>{{postDate}}</text>
+      </view>
+      <icon type="{{postStatus}}"></icon>
     </view>
+    <!-- 包括内容、标题 -->
+    <view id='words'>
+      <text id='title'>{{postTitle}}</text>
+      <text id='content'>{{postContent}}</text>
+      <image wx:for = "{{postImg}}" src='{{item}}' mode='widthFix' bindtap='previewpost' data-src='{{item}}'></image>
+    </view>
+  </view>
+  <!-- 分隔两个区域 -->
+  <view id='divide'></view>
+  <!-- 评论 -->
+  <view class='comments' wx:for='{{commentList}}' wx:for-item='comments' wx:for-index='num'>
+    <view class='comHeader'>
+      <!-- 评论者头像 -->
+      <image src='{{comments.userhead}}'></image>
+      <!-- 评论者用户名和楼层 -->
+      <view>
+        <text class='commername'>{{comments.username}}</text>
+        <text class='floor'>{{comments.floor}}楼</text>
+      </view>
+      <!-- 采纳按钮 -->
+      <button size='mini' type='primary' wx:if='{{canIadopt}}' bindtap='adopt' disabled='{{isDisabled}}' data-commer='{{comments.sender}}'>采纳</button>
+    </view>
+    <!-- 评论主体 -->
+    <view class='comBody'>
+      <text>{{comments.content}}</text>
+      <view>
+        <image wx:for='{{comments.imgs}}' wx:for-item='img' src='{{prefix}}{{img}}'        mode='widthFix' bindtap='preview' bindlongtap='save' data-src='{{img}}' data-index='{{num}}'></image>
+      </view>
+    </view>
+  </view>
+  <!-- 点击评论 -->
+  <view id='reply'>
+    <text bindtap='post'>快帮帮孩子吧</text>
+  </view>
 </view>
-
-
-<!-- 回复框 -->
-<form bindsubmit="formSubmit" bindreset="formReset" wx:if="{{isReply==true}}">
-<view class='reply'>
-<view class='repcontent'>
-<textarea name='input' auto-focus='true' auto-height='true'></textarea>
-</view>
-<view class='repsend'>
-<button form-type='submit'>发送</button>
-</view>
-</view>
-</form>
+<view id='heightCtr'></view>
+<!-- 填写评论内容 -->
+ <view id='fill' wx:if='{{isTapReply==true}}'>
+  <view id='top'>
+    <icon type='cancel' color='#333' bindtap='cancel'></icon>
+    <text>回复</text>
+    <text bindtap='push' id='push'>发表</text>
+  </view>
+  <textarea placeholder='输入您的神评吧' auto-height='true' bindblur='saveContent'>
+  </textarea>
+  <view id='imgs'>
+    <image wx:for='{{chooseList}}' src='{{item}}' mode='aspectFill' data-src="{{item}}" bindtap='previewImg'></image>
+    <image bindtap='chooseImg' src='/images/postCreate.png' mode='aspectFill' ></image>
+  </view>
+ </view>

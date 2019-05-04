@@ -53,11 +53,7 @@ scroll-view{
 #postCredits{
   color: skyblue;
 }
-/*现金文字*/
-/* #postCash{
-  color:red;
-  text-align: center;
-} */
+
 /*内容文字*/
 #postContent{
   font-size: 3vh;

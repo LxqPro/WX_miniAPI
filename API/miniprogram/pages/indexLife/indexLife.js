@@ -11,7 +11,7 @@ Page({
     academyName: '',
     academyIndex: 0,
     academyList: ['大数据与软件学院', '法学院', '计算机学院', '生物工程学院', '冯焱华学院', '王天岗学院'],
-    acaList: [],
+    lifeList: [],
     postList: [],
     type:'lifePosts'
   },
@@ -24,20 +24,51 @@ Page({
       academyIndex: e.detail.value
     })
   },
+  /**
+   * 跳转页面并缓存数据
+   */
+  navTo: function (e) {
+    var that = this;
+    var userobj = {
+      name: that.data.lifeList[e.currentTarget.dataset.index].postername,
+      head: that.data.lifeList[e.currentTarget.dataset.index].posterhead
+    }
+    wx.setStorage({
+      key: 'postdata',
+      data: that.data.lifeList[e.currentTarget.dataset.index],
+      success: function () {
+        wx.setStorage({
+          key: 'userInfo',
+          data: userobj
+        })
+      }
+    })
 
+  },
   /**
    * 生命周期函数--监听页面出现
    */
   onShow: function (options) {
-    //-------------------------------------------拉取生活帖部分内容
+    //拉取学术帖部分内容
+    var tempRes = [];
+    var that = this;
     db.collection('Posts').where({
-      type: 'lifePosts'    //生活帖
+      type: 'lifePosts'    //学术帖
     }).get({
       success: res => {
-        console.log(res);
-        this.setData({
-          acaList: res.data  //将查询结果的所有信息都扔给academic_recList
+        tempRes = res.data;
+        tempRes.forEach(function (value, index, self) {
+          db.collection('userInfo').doc(value._openid).get({
+            success: res => {
+              self[index].postername = res.data.username;
+              self[index].posterhead = res.data.userhead;
+              that.setData({
+                lifeList: tempRes  //将查询结果的所有信息都扔给academic_recList
+              })
+            }
+          })
         })
+        console.log('[学术帖] [查询记录] 成功: ', res)
       },
       fail: err => {
         wx.showToast({
@@ -57,7 +88,7 @@ Page({
         let resData = res.data[0];
         this.setData({
           schoolName: resData.userschool,
-          academyIndex: app.getIndex(this.data.academyList, resData.useracademy)
+          academyIndex: app.getIndex(this.data.lifeList, resData.useracademy),
         })
       }
     })
