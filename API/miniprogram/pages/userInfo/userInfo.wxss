@@ -1,6 +1,8 @@
 /* 容器样式 */
 .container{
   box-sizing: border-box;
+  background-color: #f4f4f4;
+  height: 100vh;
 }
 /* 文本公共样式 */
 text{
@@ -13,6 +15,10 @@ text{
   width: 250rpx;
   height: 250rpx;
   margin: 10rpx auto;
+}
+#headImg image{
+  width: 250rpx;
+  height: 250rpx;
 }
 /*姓名学号*/
 .name-num text{
@@ -27,7 +33,7 @@ text{
 .secondcontainer text{
   color: #555;
 }
-/*修改信息按钮*/
+/*按钮*/
 .changeInfo{
   width: 700rpx;
   margin: 0 25rpx;

@@ -9,11 +9,12 @@ Page({
   data: {
     schoolName: '',
     academyName: '',
-    academyIndex: 0,
-    academyList: ['大数据与软件学院', '法学院', '计算机学院', '生物工程学院', '冯焱华学院', '王天岗学院'],
+    academyIndex: -1,
+    academyList: ['------','大数据与软件学院', '法学院', '计算机学院', '生物工程学院', '冯焱华学院', '王天岗学院'],
     lifeList: [],
     postList: [],
-    type:'lifePosts'
+    type:'lifePosts',
+    pagenum: 0
   },
 
   /**
@@ -23,6 +24,7 @@ Page({
     this.setData({
       academyIndex: e.detail.value
     })
+    this.onLoad();
   },
   /**
    * 跳转页面并缓存数据
@@ -48,52 +50,128 @@ Page({
   /**
    * 生命周期函数--监听页面出现
    */
-  onShow: function (options) {
-    //拉取学术帖部分内容
-    var tempRes = [];
-    var that = this;
-    db.collection('Posts').where({
-      type: 'lifePosts'    //学术帖
-    }).get({
-      success: res => {
-        tempRes = res.data;
-        tempRes.forEach(function (value, index, self) {
-          db.collection('userInfo').doc(value._openid).get({
+  onLoad: function (options) {
+    //如果未登录，提示去登录
+    console.log('呱呱呱')
+    if (!app.globalData.isLogin) {
+      wx.showModal({
+        title: '未登录',
+        content: '请先登录',
+        confirmText: '立即登录',
+        cancelColor: '#ff0000',
+        success: res => {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../userInfo/userInfo',
+            })
+          }
+          else if (res.cancel) {
+            console.log(app.globalData)
+          }
+        }
+      })
+    }
+    else{
+      //拉取生活帖部分内容
+      var tempRes = [];
+      var that = this;
+      /**
+        * 初始化页面个人信息
+        */
+      wx.getStorage({
+        key: 'myself',
+        success: function (res) {
+          var resData = res.data;
+          console.log(resData)
+          //如果学院未定义
+          if (that.data.academyIndex == -1) {
+            that.setData({
+              academyIndex: app.getIndex(that.data.academyList, resData.useracademy),
+            })
+          }
+          if (resData.userschool == '------' || resData.useracademy == '------') {
+            console.log(resData)
+            wx.showModal({
+              title: '无数据',
+              content: '请先完善个人信息',
+              confirmText: '去完善',
+              confirmColor: '#0000ff',
+              showCancel: false,
+              success: res => {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '../completeInform/completeInform',
+                  })
+                }
+                else if (res.cancel) {
+                  console.log(app.globalData)
+                }
+              }
+            })
+          }
+          else {
+            that.setData({
+              schoolName: resData.userschool,
+              pagenum: 20
+            })
+          }
+          //拉取本校的当前学院的学术帖
+          db.collection('Posts').where({
+            type: 'lifePosts',    //学术帖
+            school: that.data.schoolName,
+            academy: that.data.academyList[that.data.academyIndex]
+          }).orderBy('startDate', 'desc').get({
             success: res => {
-              self[index].postername = res.data.username;
-              self[index].posterhead = res.data.userhead;
-              that.setData({
-                lifeList: tempRes  //将查询结果的所有信息都扔给academic_recList
+              tempRes = res.data;
+              //如果数组长度为0，即没有该类型帖子
+              if (tempRes.length === 0) {
+                that.setData({
+                  lifeList: tempRes  //将查询结果的所有信息都扔给academic_recList
+                })
+              }
+              tempRes.forEach(function (value, index, self) {
+                db.collection('userInfo').doc(value._openid).get({
+                  success: res => {
+                    self[index].postername = res.data.username;
+                    self[index].posterhead = res.data.userhead;
+                    that.setData({
+                      lifeList: tempRes  //将查询结果的所有信息都扔给academic_recList
+                    })
+                  }
+                })
               })
+              console.log('[学术帖] [查询记录] 成功: ', res)
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '查询记录失败'
+              })
+              console.error('[数据库] [查询记录] 失败：', err)
             }
-          })
-        })
-        console.log('[学术帖] [查询记录] 成功: ', res)
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    });
-    /**
-     * 初始化页面个人信息
-     */
-    db.collection('userInfo').where({
-      _openid: app.globalData.openid
-    }).get({
-      success: res => {
-        let resData = res.data[0];
-        this.setData({
-          schoolName: resData.userschool,
-          academyIndex: app.getIndex(this.data.lifeList, resData.useracademy),
-        })
-      }
-    })
+          });
+        }
+      })
+    }
   },
-
+  /**
+   * 生命周期函数--监听页面出现
+   * 读取缓存，如果是以发帖状态返回，则刷新页面
+   */
+  onShow(){
+    var res = wx.getStorageSync('postCreate');
+    console.log(res)
+    if(res==1){
+      wx.setStorage({
+        key: 'postCreate',
+        data: 0,
+        success:res=>{
+          console.log('嘤嘤嘤')
+          this.onLoad()
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -121,24 +199,8 @@ Page({
   onPullDownRefresh: function () {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
-    var that = this;
-    db.collection('Posts').where({
-      type: 'lifePosts'    //学术帖
-    }).get({
-      success: res => {
-        this.setData({
-          acaList: res.data  //将查询结果的所有信息都扔给acaList
-        })
-        console.log('刷新成功，nb!')
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-      }
-    });
-
+    var that = this ;
+    that.onLoad();
     // 隐藏导航栏加载框
     wx.hideNavigationBarLoading();
     // 停止下拉动作
@@ -149,7 +211,41 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var that = this;
+    //接收刷新出的数组，然后合并到原数组，实现加载
+    var tempRes;
+    //拉取帖子
+    db.collection('Posts').where({
+      type: 'lifePosts',    //学术帖
+      school: that.data.schoolName,
+      academy: that.data.academyList[that.data.academyIndex]
+      //分页拉取20条
+    }).orderBy('startDate', 'desc').skip(that.data.pagenum).get({
+      success: res => {
+        tempRes = res.data;
+        //完善数组内容
+        tempRes.forEach(function (value, index, self) {
+          console.log(index)
+          db.collection('userInfo').doc(value._openid).get({
+            success: res => {
+              console.log(res)
+              self[index].postername = res.data.username;
+              self[index].posterhead = res.data.userhead;
+              console.log(index)
+              that.setData({
+                //分页数加一，数组加长
+                pagenum: that.data.pagenum + 20,
+                lifeList: that.data.lifeList.concat(tempRes)
+              })
+            },
+            fail: err => {
+              console.log(err)
+            }
+          })
+        })
+        console.log('[学术帖] [查询记录] 成功: ', res)
+      },
+    })
   },
 
   /**

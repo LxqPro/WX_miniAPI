@@ -4,11 +4,12 @@ const db = wx.cloud.database();
 Page({
   data: {
     username:'',
-    userhead:'',
+    userhead:'/images/login.png',
     userschool:'',
     usernum:'',
     useracademy:'',
-    usercredit:''
+    usercredit:'',
+    islogin:false  //是否禁用授权按钮
   },
   /**
    * 跳转到修改个人信息页面
@@ -28,64 +29,84 @@ Page({
       url: '../creditRank/creditRank?username='+that.data.username+'&usercredit='+that.data.usercredit
     })
   },
-  onShow: function () {
-    var that = this;
-    //查询数据库，根据id
-    db.collection('userInfo').where({
-      _openid: app.globalData.openid
-    }).get({
+  showHistory:function(){
+    wx.navigateTo({
+      url: '../historyPosts/historyPosts',
+    })
+  },
+  //用户授权后创建用户
+  getInfo:function(){
+    var that = this
+    wx.getUserInfo({
       success: res => {
-        let resData = res.data[0];
-        //如果没有该用户，则创建用户
-        if(resData===undefined){
-          wx.getUserInfo({
-            success: res => {
-              that.setData({
-                username: res.userInfo.nickName,
-                usercredit:500,
-                userhead: res.userInfo.avatarUrl
-              });
-              //写入数据库
-              db.collection('userInfo').add({
-                data: {
-                  _id: app.globalData.openid,
-                  username: res.userInfo.nickName,
-                  userhead: res.userInfo.avatarUrl,
-                  usernum: '',
-                  usercredit: 500,
-                  useracademy: '',
-                  userschool: '',
-                }
-              })
-            }
-          });
-        }
-        //否则显示该用户信息
-        else{
-          that.setData({
-            username: resData.username,
-            usernum: resData.usernum,
-            userschool: resData.userschool,
-            useracademy: resData.useracademy,
-            usercredit: resData.usercredit
-          });
-        }
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
+        app.globalData=({
+          openid:app.globalData.openid,
+          isLogin:true
+        })
+        that.setData({
+          username: res.userInfo.nickName,
+          usercredit: 200,
+          userhead: res.userInfo.avatarUrl,
+          islogin:true
         });
-        wx.getUserInfo({
-          success: res => {
-            that.setData({
-              username: res.userInfo.nickName
-            })
+        var tempObj = {
+          _id:app.globalData.openid,
+          _openid:app.globalData.openid,
+          useracademy:"",
+          usercredit:200,
+          userhead:res.userInfo.avatarUrl,
+          username:res.userInfo.nickName,
+          usernum:"",
+          userschool:""
+        }
+        //写入数据库
+        db.collection('userInfo').add({
+          data: {
+            _id: app.globalData.openid,
+            username: res.userInfo.nickName,
+            userhead: res.userInfo.avatarUrl,
+            usernum: '',
+            usercredit: 200,
+            useracademy: '------',
+            userschool: '------',
           }
         })
+        //写入缓存
+        wx.setStorage({
+          key: 'myself',
+          data: tempObj,
+        })
       },
+      fail: res => {
+        console.log(res)
+      }
     });
-
   },
-
+  onShow: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'myself',
+      success: function(res) {
+        var resData=res.data
+        console.log(resData)
+        console.log(resData.username)
+        that.setData({
+          username: resData.username,
+          usernum: resData.usernum,
+          userschool: resData.userschool,
+          useracademy: resData.useracademy,
+          usercredit: resData.usercredit,
+          userhead: resData.userhead,
+          islogin: true
+        });
+        console.log(that.data.username)
+      },
+      fail:function(err){
+        console.log(err)
+      }
+    })
+  },
+  clear:function(){
+    wx.clearStorage()
+  }
 })

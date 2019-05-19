@@ -2,14 +2,14 @@
 #container{
   display: flex;
   flex-direction: column;
-  background-color: #ccc;
+  background-color: #FFCC66;
   box-sizing: content-box;
 }
 
 /* 顶部导航栏样式 */
 .topBar{
   height: 200rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 5rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -19,7 +19,9 @@
 .recommend{
   height: 80vh;
 }
-
+.recommend > text{
+  padding-bottom: 10rpx;
+}
 .topBar, .recommend{
   width: 100%;
   background-color: #fff;
@@ -47,7 +49,6 @@
 /* 所有文字样式 */
 text{
   display: block;
-
   text-align: center;
   font-size: 50rpx;
 }
@@ -65,7 +66,9 @@ scroll-view{
 }
 /* 单独帖子*/
 scroll-view navigator{
-    position: relative;
+  position: relative;
+  margin-top: 20px;
+  border-bottom: 0.5rpx solid #ccc;
 }
 /* 头像 */
 scroll-view image{
@@ -79,6 +82,7 @@ scroll-view image{
   right: 30rpx;
   top: 0rpx;
   font-size: 25rpx;
+  color: #FC6;
 }
 /* 推荐栏文字部分 */
 .recContent{

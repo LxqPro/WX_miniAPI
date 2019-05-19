@@ -6,6 +6,7 @@
   </view>
   <!-- 主体信息 -->
   <view id='body'>
+     <text id='title'>{{postTitle}}</text>
     <!-- 包括头像、昵称、发布时间、状态 -->
     <view id='bodyheader'>
       <image src='{{userHead}}'></image>
@@ -17,7 +18,7 @@
     </view>
     <!-- 包括内容、标题 -->
     <view id='words'>
-      <text id='title'>{{postTitle}}</text>
+      
       <text id='content'>{{postContent}}</text>
       <image wx:for = "{{postImg}}" src='{{item}}' mode='widthFix' bindtap='previewpost' data-src='{{item}}'></image>
     </view>
@@ -32,10 +33,10 @@
       <!-- 评论者用户名和楼层 -->
       <view>
         <text class='commername'>{{comments.username}}</text>
-        <text class='floor'>{{comments.floor}}楼</text>
+        <text class='floor'>{{num+1}}楼</text>
       </view>
       <!-- 采纳按钮 -->
-      <button size='mini' type='primary' wx:if='{{canIadopt}}' bindtap='adopt' disabled='{{isDisabled}}' data-commer='{{comments.sender}}'>采纳</button>
+      <button size='mini' type='primary' wx:if='{{canIadopt}}' hidden='{{!comments.isIn}}' bindtap='adopt' disabled='{{isDisabled}}' data-commer='{{comments.sender}}'>采纳</button>
     </view>
     <!-- 评论主体 -->
     <view class='comBody'>
@@ -49,8 +50,9 @@
   <view id='reply'>
     <text bindtap='post'>快帮帮孩子吧</text>
   </view>
+  <view id='blank'></view>
 </view>
-<view id='heightCtr'></view>
+<view id='heightCtr'>
 <!-- 填写评论内容 -->
  <view id='fill' wx:if='{{isTapReply==true}}'>
   <view id='top'>
@@ -62,6 +64,7 @@
   </textarea>
   <view id='imgs'>
     <image wx:for='{{chooseList}}' src='{{item}}' mode='aspectFill' data-src="{{item}}" bindtap='previewImg'></image>
-    <image bindtap='chooseImg' src='/images/postCreate.png' mode='aspectFill' ></image>
+    <image bindtap='chooseImg' src='/images/drawable-xhdpi/addimg.png' mode='aspectFill' ></image>
   </view>
  </view>
+</view>

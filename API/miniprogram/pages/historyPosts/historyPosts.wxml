@@ -1,0 +1,23 @@
+<!--miniprogram/pages/historyPosts/historyPosts.wxml-->
+<!--pages/indexAcademic/indexAcademic.wxml-->
+<view class = 'container'>
+  <view id = 'head'>
+    <text class = 'head'>帖子类型：</text>
+    <picker mode='selector' range="{{typeList}}" bindchange='ensureSelect' value="{{typeIndex}}">
+      <text class = 'head'>{{typeList[typeIndex]}}</text>
+    </picker>
+  </view>
+  <!-- /*帖子信息列表*/ -->
+  <scroll-view scroll-y bindscrolltolower="postUpdate">
+    <navigator id='posts' bindtap='navTo' url = '/pages/postDetail/postDetail?title={{item._id}}' wx:for="{{acaList}}" data-index='{{index}}' bindlongpress='postDelete'>
+    <!-- /*头部信息*/ -->
+      <view id='userInfo'>
+        <image src="{{item.posterhead}}"></image>
+        <text class='username'>{{item.postername}}</text>
+        <icon type='{{item.status}}'></icon>
+        <text id='postCredits' class='postHeader'>[{{item.credits}}积分]</text>
+      </view>
+      <text id='postContent'>{{item.title}}</text>
+    </navigator>
+  </scroll-view>
+</view>

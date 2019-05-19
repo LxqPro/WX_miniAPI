@@ -1,23 +1,23 @@
-/* pages/indexLife/indexLife.wxss */
+/* pages/indexAcademic/indexAcademic.wxss */
 .container{
   box-sizing: border-box;
-  background-color: #ddd;
+  background-color: #f4f4f4;
 }
 /* 发帖按钮样式 */
 #postCreater{
   width: 100rpx;
   height: 100rpx;
-
   position: fixed;
   bottom: 50rpx;
   right: 50rpx;
   z-index: 1;
+  opacity: 0.9;
 }
 /*发帖图片大小*/
 #postCreater image{
   width: 100rpx;
   height: 100rpx;
-  border-radius: 70%;
+  border-radius: 20px;
 }
 /*文字公共样式*/
 text{
@@ -40,24 +40,14 @@ text{
 
 /*滚动区域*/
 scroll-view{
-  /* height: 80vh; */
   width:100%;
 }
 /* 帖子样式 */
 #posts{
   margin-bottom: 2px;
-  background-color: #fff;
+  border-bottom: 0.5rpx solid #ccc;
 }
 
-/*积分文字*/
-#postCredits{
-  color: skyblue;
-}
-/*现金文字*/
-/* #postCash{
-  color:red;
-  text-align: center;
-} */
 /*内容文字*/
 #postContent{
   font-size: 3vh;
@@ -67,22 +57,24 @@ scroll-view{
   text-align: left;
   width: 700rpx;
   max-width: 700rpx;
-  margin: 2vh 25rpx ;
-  margin-bottom: 0;
+  margin: 1vh 25rpx ;
   font-family: '宋体';
   color: #555;
 }
-/*现金积分公共样式*/
+/*积分样式*/
 .postHeader{
-  display: inline-block;
-  text-align: left;
-  width: 50%;
+  float: right;
+  text-align: right;
   font-size: 2.5vh;
+  color: skyblue;
+  line-height: 60rpx;
 }
 
 /*用户信息*/
 #userInfo{
   height: 60rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
 }
 /*头像*/
 #userInfo image{
@@ -92,15 +84,15 @@ scroll-view{
   border-radius: 50%;
 }
 /*姓名*/
-#userInfo text{
+#userInfo .username{
   float: left;
   font-size: 2.5vh;
   padding-left: 20rpx;
   font-weight: 550;
+  line-height: 60rpx;
 }
 /* 状态 */
 #userInfo icon{
   float: right;
-  margin-right: 30rpx;
+  margin: auto 20rpx;
 }
-

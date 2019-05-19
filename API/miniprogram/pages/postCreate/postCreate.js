@@ -10,7 +10,7 @@ Page({
     school:'',
     academy:'',
     imgList:[],   //图片的临时文件路径
-    creditList:[1,2,3,4,5],
+    creditList:[],
     creditVal:1,   //悬赏的积分
     title:'',
     content:'',
@@ -75,6 +75,10 @@ Page({
     var date = new Date();  //获取系统当前日期
     var cloudPath;
     var pathArr=[];
+    wx.showLoading({
+      title: '发布中',
+      mask:true
+    })
     that.data.imgList.forEach(function(value,index){
       cloudPath = app.globalData.openid + '/' + Date.parse(date) + index + value.match(/\.[^.]+?$/)[0];
       wx.cloud.uploadFile({
@@ -93,7 +97,7 @@ Page({
     this.setData({
       imgurl:pathArr
     })
-  
+    // db.collection('postNumber')
     // doc(that.data.openid);
     db.collection('Posts').add({
       data: {
@@ -106,11 +110,9 @@ Page({
         content: that.data.content,  //帖子内容
         startDate: date,  //帖子上传时间
         imgurl:that.data.imgurl  //帖子关联图片的id
+        // number:
       },
       success(res) {
-        wx.showToast({
-          title: '上传成功'
-        });
         //修改用户积分
         let userdb = db.collection('userInfo').doc(app.globalData.openid);
         userdb.get({
@@ -123,12 +125,18 @@ Page({
                 usercredit: that.data.oldcredit - that.data.creditVal
               }
             })
+            wx.setStorage({
+              key: 'postCreate',
+              data: 1,
+            })
+            wx.setStorageSync('postCreate', 1)
+            wx.navigateBack();
+            wx.hideLoading();
+            wx.showToast({
+              title: '上传成功'
+            });
           }
         });
-        
-        setTimeout(function () {
-          wx.navigateBack()
-        }, 1000)
       }
     })
   },
@@ -137,11 +145,22 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
-    this.setData({
-      school: options.school,
-      academy: options.academy,
-      type: options.type
-    });
+    if (options.type === 'lifePosts'){
+      this.setData({
+        school: options.school,
+        academy: options.academy,
+        type: options.type,
+        creditList:[0,1,2]
+      });
+    }
+    else{
+      this.setData({
+        school: options.school,
+        academy: options.academy,
+        type: options.type,
+        creditList:[1,2,3,4,5]
+      });
+    }
   },
 
 

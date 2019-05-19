@@ -4,10 +4,11 @@ view{
 /* 容器样式 */
 #container{
   width: 100%;
+  background-color: #f4f4f4;
 }
 /* 头部信息 */
 #header{
-  margin:10rpx auto;
+  margin:0 auto;
   text-align: center;
   font-size: 30rpx;
 }
@@ -15,7 +16,10 @@ view{
 #bodyheader{
   position: relative;
   display: flex;
-  margin-bottom: 20rpx;
+  margin: 20rpx auto;
+  background:rgba(238,238,238,0.5);
+  border-bottom: 0.5rpx solid #ddd;
+  border-radius: 18px;
 }
 /* 头像样式 */
 #bodyheader image{
@@ -35,12 +39,12 @@ view{
 /* 图标 */
 #bodyheader icon{
   position: absolute;
-  right: 20rpx;
+  right: 10rpx;
   top: 0;
 }
 /* 帖子主体信息样式 */
 #body{
-  width: 660rpx;
+  width: 650rpx;
   margin: 20rpx auto;
   padding-bottom: 40rpx;
 }
@@ -51,22 +55,30 @@ view{
 /* 帖子内容 */
 #words text{
   display: block;
+  font-size: 32rpx;
+  line-height: 46rpx;
 }
 /* 帖子标题 */
 #title{
-  text-align: center;
-  margin: 0 auto 30rpx auto;
-  font-size: 50rpx;
+  text-align: left;
+  margin: 40rpx auto 20rpx 0;
+  font-size: 46rpx!important;
   font-weight: 800;
 }
 /* 帖子图片 */
 #words image{
-  width:660rpx;
-  border-radius: 5%;
+  margin: 40rpx 0;
+  width:650rpx;
+  border-radius: 2%;
 }
-/* 高度控制 */
-#heightCtr{
+/* //为了使下面的回复按钮不遮住最后一个评论 */
+#blank{
   height: 100rpx;
+}
+/* 回复区 */
+#heightCtr{
+  background-color: #f4f4f4;
+  width: 100%;
 }
 /* 评论 */
 #reply{
@@ -94,23 +106,26 @@ view{
   width:700rpx;
   height: 100vh;
   margin: 0 auto;
+  background-color: #f4f4f4;
 }
 /* 回复顶部 */
 #top{
   display: flex;
   justify-content: space-between;
-  margin: 10rpx 0;
+  margin-bottom:40rpx;
+  padding:20rpx 0;
+  border-bottom: 0.1px solid #000;
 }
 /* 回复按钮 */
 #push{
-  color: blue;
+  color:#ffcc33;
 }
 /* 填写区域 */
 #fill textarea{
   box-sizing: border-box;
   width: 700rpx;
-  border: 1rpx solid #ddd;
   padding: 0 10rpx;
+  font-family: '宋体';
 }
 /* 选择的图片 */
 #imgs{

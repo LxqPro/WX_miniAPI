@@ -1,34 +1,82 @@
-/* pages/indexOthers/indexOthers.wxss */
-/* 文字 */
+/* pages/indexAcademic/indexAcademic.wxss */
+.container{
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+}
+/*文字公共样式*/
 text{
   display: block;
-  width: 100%;
   text-align: center;
-  font-size: 35rpx;
-  font-family: '宋体';
 }
-/* 一个帖子的容器 */
-.tip{
-  height: 150rpx;
-  margin-top: 10rpx;
-  border: 1rpx solid rebeccapurple;
-  padding-top: 10rpx;
-  background-color: rgba(70, 63, 63, 0.11);
+#head{
+  display: flex;
+  height: 80rpx;
+  width: 100%;
+  justify-content: space-around;
+  border-bottom:1rpx solid #ccc; 
 }
-/* 帖子的基本属性 */
-.school, .credits{
-  text-align: left;
-  width: 50%;
-  float: left;
+
+.head{
+  text-align: center;
+  line-height: 80rpx;
+  display: block;
 }
-.content{
+
+/*滚动区域*/
+scroll-view{
+  width:100%;
+}
+/* 帖子样式 */
+#posts{
+  margin-bottom: 2px;
+  border-bottom: 0.5rpx solid #ccc;
+}
+
+/*内容文字*/
+#postContent{
+  font-size: 3vh;
+  word-break: break-word;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-left: 18rpx;
+  white-space: normal;
+  text-align: left;
+  width: 700rpx;
+  max-width: 700rpx;
+  margin: 1vh 25rpx ;
+  font-family: '宋体';
+  color: #555;
 }
-.done, .reward{
-  text-align: right;
-  width: 50%;
+/*积分样式*/
+.postHeader{
   float: right;
+  text-align: right;
+  font-size: 2.5vh;
+  color: skyblue;
+  line-height: 60rpx;
+}
+
+/*用户信息*/
+#userInfo{
+  height: 60rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+/*头像*/
+#userInfo image{
+  float: left;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+/*姓名*/
+#userInfo .username{
+  float: left;
+  font-size: 2.5vh;
+  padding-left: 20rpx;
+  font-weight: 550;
+  line-height: 60rpx;
+}
+/* 状态 */
+#userInfo icon{
+  float: right;
+  margin: auto 20rpx;
 }

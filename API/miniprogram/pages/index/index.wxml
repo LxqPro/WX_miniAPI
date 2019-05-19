@@ -24,11 +24,11 @@
   </view>
 <!-- 推荐帖 -->
   <view class = "recommend">
-    <text>推荐贴区域</text>
-    <scroll-view scroll-y bindscrolltolower='recUpdate'>
+    <text>推荐</text>
+    <scroll-view scroll-y >
       <!-- 精品贴列表 -->
       <navigator wx:for="{{recList}}" url='../../pages/postDetail/postDetail' data-index = '{{index}}' bindtap='toDetail'>
-        <image src = '{{item.posterhead}}'></image>
+        <image wx:if='{{item.posterhead!=undefined}}' src = '{{item.posterhead}}'></image>
         <text class='recSchool'>{{item.school}}</text>
         <text class='recContent'>{{item.content}}</text>
       </navigator>

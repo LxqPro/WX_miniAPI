@@ -28,7 +28,6 @@ Page({
   
   // 编辑评论
   post:function(){
-    console.log('????')
     this.setData({
       isTapReply:true
     })
@@ -57,12 +56,15 @@ Page({
           });
           pathArr[index] = cloudPath;
         })
-        //保存评论到数据库
-        let commentObj = {
-          sender: app.globalData.openid,
+        //创建评论对象
+        var commentObj = {
           content: that.data.replyContent,
-          imgs: pathArr
+          imgs: pathArr,
+          sender: app.globalData.openid
         };
+        //同步读取用户信息缓存，完善评论对象
+        var myself = wx.getStorageSync('myself');
+        // 由于读写权限，向非创建者写入需要调用云函数
         wx.cloud.callFunction({
           name: 'saveComment',
           data: {
@@ -70,16 +72,19 @@ Page({
             commentObj: commentObj
           },
           success: res => {
+            commentObj.username = myself.username
+            commentObj.userhead = myself.userhead
+            that.data.commentList.push(commentObj)
             wx.hideLoading();
             that.setData({
-              isTapReply: false
+              isTapReply: false,
+              commentList:that.data.commentList
             })
           },
           fail: err => {
             console.log(err)
           }
         })
-        
       }
     })
   },
@@ -205,10 +210,9 @@ Page({
     tempCom.forEach(function (value, index, array) {
       db.collection('userInfo').doc(value.sender).get({
         success: res => {
-          array[index].floor = index+1;
           array[index].username = res.data.username;
           array[index].userhead = res.data.userhead;
-          
+          array[index].isIn = that.data.postSchool===res.data.userschool;
           //注意这里是异步API，需要写在回调函数
           that.setData({
             commentList: tempCom
@@ -229,5 +233,22 @@ Page({
       username:poster.name,
       userHead:poster.head
     });
-  }
+  },
+  //下拉刷新
+  onPullDownRefresh: function () {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    var that = this;
+    db.collection('Posts').doc(wx.getStorageSync('postdata')._id).get({
+      success:res=>{
+        console.log(res)
+        wx.setStorageSync('postdata', res.data)
+        that.onLoad();
+      }
+    })
+    // 隐藏导航栏加载框
+    wx.hideNavigationBarLoading();
+    // 停止下拉动作
+    wx.stopPullDownRefresh();
+  },
 })

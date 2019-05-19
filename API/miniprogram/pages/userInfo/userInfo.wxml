@@ -1,7 +1,10 @@
 <view class='container'>
 <!-- 头像 -->
   <view id='headImg'>
-    <open-data type='userAvatarUrl' ></open-data>
+  <!-- 登录按钮 -->
+    <button open-type="getUserInfo" bindgetuserinfo='getInfo' plain='true' style='border:0;padding:0' disabled='{{islogin}}'>
+      <image src='{{userhead}}' mode='aspectFit'></image>
+    </button>
   </view>
 <!-- 姓名积分 -->
   <view class='name-num'>
@@ -9,11 +12,16 @@
     <text id='usernum'>{{usercredit}}</text>
   </view>
 <!-- 学号学校学院 -->
-<view class='secondcontainer'>
-  <text id='credit'>学号：{{usernum}}</text>
-  <text id='school'>学校：{{userschool}}</text>
-  <text id='academy'>学院：{{useracademy}}</text>
+  <view class='secondcontainer'>
+    <text id='credit'>学号：{{usernum}}</text>
+    <text id='school'>学校：{{userschool}}</text>
+    <text id='academy'>学院：{{useracademy}}</text>
+  </view>
+  <view wx:if='{{islogin}}'>
+    <button class='changeInfo' bindtap='changeInfo'>修改信息</button>
+    <button class='changeInfo' bindtap='showRank'>积分排名</button>
+    <button class='changeInfo' bindtap='showHistory'>我的帖子</button>
+    <button type='primary' size='mini' bindtap='clear'>清除缓存</button>
+  </view>
 </view>
-<button class='changeInfo' bindtap='changeInfo'>修改个人信息</button>
-<button class='changeInfo' bindtap='showRank'>查看积分排名</button>
-</view>
+

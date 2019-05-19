@@ -8,14 +8,16 @@
     "pages/completeInform/completeInform",
     "pages/postDetail/postDetail",
     "pages/postCreate/postCreate",
-    "pages/creditRank/creditRank"
+    "pages/creditRank/creditRank",
+    "pages/historyPosts/historyPosts"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#FFCC33",
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarBackgroundColor": "#FFCC33",
     "navigationBarTitleText": "小扳手",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance":100
   },
   "tabBar": {
     "color": "#9ea1a6",

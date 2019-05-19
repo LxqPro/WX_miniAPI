@@ -1,7 +1,8 @@
 //app.js
 App({
   globalData:{
-    openid:''
+    openid:'',
+
   },
   onLaunch:function(){
     // 云开发初始化
@@ -12,13 +13,30 @@ App({
     /**
      * 获取用户openid
      */
+    var db = wx.cloud.database();
     wx.cloud.callFunction({
       name: 'getOpenid',
       complete: res => {
-        this.globalData=({
-          openid: res.result.openid
-        });
-        console.log(res.result);
+        console.log(res)
+        db.collection('userInfo').doc(res.result.openid).get({
+          success:data=>{
+            wx.setStorage({
+              key: 'myself',
+              data: data.data,
+            })
+            this.globalData=({
+              openid: res.result.openid,
+              isLogin:true
+            })
+          },
+          fail:err=>{
+            console.log(res.result.openid)
+            this.globalData=({
+              openid: res.result.openid,
+              isLogin:false
+            })
+          }
+        })
       }
     });
   },
@@ -30,5 +48,6 @@ App({
       }
     })
     return Index;
-  }
+  },
+  
 })

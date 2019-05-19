@@ -1,12 +1,16 @@
-<!--pages/indexOthers/indexOthers.wxml-->
-<scroll-view scroll-y bindscrolltolower='recUpdate'>
-  <navigator wx:for="{{recList}}"wx:key="key" url='../../pages/postDetail/postDetail?title={{item._id}}' >
-    <view class='tip'>
-      <text class='school'>学校：{{item.school}}</text>
-      <text class='done'>状态：{{item.done}}</text>
-      <text class='content'>{{item.content}}</text>
-      <text class='credits'>积分：{{item.credits}}</text>
-      <text class='reward'> ${{item.reward}}</text>
-    </view>
-   </navigator>
-</scroll-view>
+<!--pages/indexLife/indexLife.wxml-->
+<view class = 'container'>
+  <!-- /*帖子信息列表*/ -->
+  <scroll-view scroll-y bindscrolltolower="postUpdate">
+    <navigator id='posts' bindtap='navTo' url = '/pages/postDetail/postDetail' data-index='{{index}}' wx:for="{{otherList}}">
+    <!-- /*头部信息*/ -->
+      <view id='userInfo'>
+        <image wx:if='{{item.posterhead!=undefined}}' src="{{item.posterhead}}"></image>
+        <text class='username'>{{item.postername}}</text>
+        <text id='postCredits' class='postHeader'>[{{item.school}}]</text>
+      </view>
+      <text id='postContent'>{{item.title}}</text>
+    </navigator>
+  </scroll-view>
+</view>
+

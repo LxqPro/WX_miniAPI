@@ -1,9 +1,10 @@
 //index.js
 const app = getApp()
+const db = wx.cloud.database()
 Page({
   data:{
     num: 0,     //三个导航项的序号
-    number: 6,  //显示在推荐帖区域中的帖子数目
+    pageIndex: 0,  //
     recList:[], //用于记录帖
   },
   //点击某个导航触发的事件
@@ -32,21 +33,19 @@ Page({
     })
   },
   onShow:function(){
-    const db = wx.cloud.database()
-    //-------------------------------------------拉取帖子内容
     var tempRes = [];
     var that = this;
-    db.collection('Posts').where({
-    // status:'waiting'         //筛选条件为仍未结帖的帖子
+    db.collection('Posts').skip(that.data.pageIndex).orderBy('startDate', 'desc').where({
+      status:'waiting',         //筛选条件为仍未结帖的帖子
+      type:'lifePosts'
     }).get({
       success: res => {
-        console.log(res.data)
         tempRes = res.data;
         tempRes.forEach(function (value, index, self) {
           db.collection('userInfo').doc(value._openid).get({
-            success: res => {
-              self[index].postername = res.data.username;
-              self[index].posterhead = res.data.userhead;
+            success: e => {
+              self[index].postername = e.data.username;
+              self[index].posterhead = e.data.userhead;
               that.setData({
                 recList: tempRes  //将查询结果的所有信息都扔给academic_recList
               })
@@ -63,12 +62,29 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       },
     });
-
-
     //还原点击的样式
     this.setData({
       num: 0
     });
-
-  }
+  },
+  onLoad:function(){
+    var tempArr = wx.getStorageSync('userLabel')
+    if(tempArr == ''){
+      wx.setStorageSync('userLabel',[])
+    }
+    else{
+      wx.setStorageSync('userLabel', tempArr)
+    }
+  },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    var that = this;
+    this.setData({
+      pageIndex: that.data.pageIndex+20
+    })
+    this.onShow();
+  },
 })
+

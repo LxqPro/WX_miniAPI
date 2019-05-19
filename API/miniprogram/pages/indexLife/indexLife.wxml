@@ -15,11 +15,11 @@
     <navigator id='posts' bindtap='navTo' url = '/pages/postDetail/postDetail' data-index='{{index}}' wx:for="{{lifeList}}">
     <!-- /*头部信息*/ -->
       <view id='userInfo'>
-        <image src="{{item.posterhead}}"></image>
-        <text>{{item.postername}}</text>
+        <image wx:if='{{item.posterhead!=undefined}}' src="{{item.posterhead}}"></image>
+        <text class='username'>{{item.postername}}</text>
         <icon type='{{item.status}}'></icon>
+        <text id='postCredits' class='postHeader'>[{{item.credits}}积分]</text>
       </view>
-      <text id='postCredits' class='postHeader'>[{{item.credits}}积分]</text>
       <text id='postContent'>{{item.title}}</text>
     </navigator>
   </scroll-view>
